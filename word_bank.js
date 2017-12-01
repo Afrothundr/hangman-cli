@@ -5,3 +5,5 @@ function WordBank() {
 		return this.words[randomNum];
 	}
 }
+
+module.exports = WordBank;
