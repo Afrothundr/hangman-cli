@@ -12,13 +12,13 @@ function WordCheck() {
 		}
 	this.checkFor = function(guess) {
 		var attempts = 0;
+		if (this.lettersGuessed.includes(guess)) {
+			return console.log("you already guessed that!");
+		}
 		this.lettersGuessed.push(guess);
 		for (i=0; i< this.puzzle.length; i++) {
 			if (guess == this.puzzle[i]) {
 				this.progress[i] = guess;
-				if (this.progress === this.puzzle) {
-					this.solved = true;
-				}
 			} else {
 				attempts++
 			}
@@ -32,7 +32,11 @@ function WordCheck() {
 			console.log(this.progress.join(""));
 			console.log("Nice Work!");
 		}
+		if (this.progress.join("") === this.puzzle.join("")) {
+					this.solved = true;
+				}
 		console.log(`Here's what you have already guessed: ${this.lettersGuessed}`);
+
 
 
 	}
