@@ -1,23 +1,24 @@
 var wordCheck = require('./word.js');
 var inquirer = require('inquirer');
 var wordBank = require('./word_bank.js');
-var selectedWord = null;
+
+var selectedWord = new wordBank();
 var game = null;
 
-var setup = function() {
-	selectedWord = new wordBank();
-	game = new wordCheck();
+function setup() {
 	//set random word from word bank
+	game = new wordCheck();
 	game.currentWord(selectedWord.pickWord());
-	console.log(game.progress.join(""));
+	game.solved = false;
+	playGame();
 }
 
-var playGame = function() {
+function playGame() {
+	console.log(game.progress.join(""));
 	if (game.solved === true) {
 				console.log("--------------------" + "\nYOU WON! WOOT");
 				playAgain();
 			}
-	console.log(game.solved);
 	inquirer.prompt(
 		{
 		  type: "input",
@@ -28,31 +29,31 @@ var playGame = function() {
 			game.checkFor(guess.guess);
 			if (game.guesses === 0) {
 				console.log("You Lose!!");
-				console.log(game.puzzle);
+				console.log(`You really couldn't guess "${game.puzzle.join("")}"?!?`);
 				playAgain();
 
 			} else {
 				playGame();
 			}
 		});
+
+function playAgain() {
+		inquirer.prompt(
+		{
+			 type: "confirm",
+			 name: "answer",
+			 message: "Want to play again?",
+		}
+		).then(function(response) {
+		if (response.answer === true) {
+		   setup();
+		} else {
+			console.log("Thanks for playing!");
+		}
+	 });
+	}
 }
 
-var playAgain = function() {
-	inquirer.prompt(
-	{
-		 type: "confirm",
-		 name: "confirm",
-		 message: "Want to play again?"
-	}).then(function(answer) {
-	if (answer.confirm === true) {
-	setup();
-	playGame();
-	} else {
-		console.log("Thanks for playing!");
-	}
- });
-}
 
 
 setup();
-playGame();

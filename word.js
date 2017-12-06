@@ -25,19 +25,15 @@ function WordCheck() {
 		}
 		if (attempts === this.puzzle.length) {
 			this.guesses--;
-			console.log(this.progress.join(""));
 			console.log("Wow... no.");
 			console.log(`You have ${this.guesses} guesses left!`);
 		} else {
-			console.log(this.progress.join(""));
 			console.log("Nice Work!");
 		}
 		if (this.progress.join("") === this.puzzle.join("")) {
 					this.solved = true;
 				}
 		console.log(`Here's what you have already guessed: ${this.lettersGuessed}`);
-
-
 
 	}
 
